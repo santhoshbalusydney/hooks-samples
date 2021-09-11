@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { useForm } from "./useForm";
-import { useFetch } from "./useFetch";
+import { Hello } from "./Hello";
 
 const App = () => {
   const [values, handleChange] = useForm({
@@ -8,18 +8,23 @@ const App = () => {
     password: "",
     firstName: ""
   });
-  const [count, setCount] = useState(0);
-  // const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`);
-  const { data, loading } = useFetch(`https://jsonplaceholder.typicode.com/todos/${count}`);
+  const inputRef = useRef();
+
+  useLayoutEffect(() => {
+    console.table(inputRef.current.getBoundingClientRect());
+  }, []);
 
   return (
     <div>
-      <div>{!data ? "loading..." : data}</div>
-      <div>count: {count}</div>
-      <button onClick={() => setCount(c => c + 1)}>increment</button>
       <>
-        <input name="email" value={values.email} onChange={handleChange} />
         <input
+          ref={inputRef}
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+        />
+        <input
+          ref={inputRef}
           name="firstName"
           placeholder="first name"
           value={values.firstName}
@@ -31,6 +36,13 @@ const App = () => {
           value={values.password}
           onChange={handleChange}
         />
+        <button
+          onClick={() => {
+            inputRef.current.focus();
+          }}
+        >
+          focus
+        </button>
       </>
     </div>
   );
