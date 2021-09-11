@@ -1,37 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { useForm } from "./useForm";
+import React, { useState, useMemo } from "react";
 import { useFetch } from "./useFetch";
 
+function computeBig(arr) {
+  if (!arr) {
+    return [];
+  }
+
+  console.log("computing something big");
+
+
+  return 'computingbig';
+}
+
 const App = () => {
-  const [values, handleChange] = useForm({
-    email: "",
-    password: "",
-    firstName: ""
-  });
   const [count, setCount] = useState(0);
-  // const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`);
-  const { data, loading } = useFetch(`https://jsonplaceholder.typicode.com/todos/${count}`);
+  const { data } = useFetch(
+    "https://jsonplaceholder.typicode.com/todos/1"
+  );
+
+  // const bigvalue = computeBig(data);
+  const bigvalue = useMemo(() => computeBig(data), [data]);
 
   return (
     <div>
-      <div>{!data ? "loading..." : data}</div>
       <div>count: {count}</div>
-      <button onClick={() => setCount(c => c + 1)}>increment</button>
-      <>
-        <input name="email" value={values.email} onChange={handleChange} />
-        <input
-          name="firstName"
-          placeholder="first name"
-          value={values.firstName}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleChange}
-        />
-      </>
+      <button onClick={() => setCount(count + 1)}>increment</button>
+      <div>{bigvalue}</div>
     </div>
   );
 };
