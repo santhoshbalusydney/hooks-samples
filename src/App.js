@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "./useForm";
 import { useFetch } from "./useFetch";
+import TodosApp from "./TodosApp";
 
 const App = () => {
   //test
@@ -14,26 +15,27 @@ const App = () => {
   const { data, loading } = useFetch(`https://jsonplaceholder.typicode.com/todos/${count}`);
 
   return (
-    <div>
-      <div>{!data ? "loading..." : data}</div>
-      <div>count: {count}</div>
-      <button onClick={() => setCount(c => c + 1)}>increment</button>
-      <>
-        <input name="email" value={values.email} onChange={handleChange} />
-        <input
-          name="firstName"
-          placeholder="first name"
-          value={values.firstName}
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          name="password"
-          value={values.password}
-          onChange={handleChange}
-        />
-      </>
-    </div>
+    <TodosApp />
+    // <div>
+    //   <div>{!data ? "loading..." : data}</div>
+    //   <div>count: {count}</div>
+    //   <button onClick={() => setCount(c => c + 1)}>increment</button>
+    //   <>
+    //     <input name="email" value={values.email} onChange={handleChange} />
+    //     <input
+    //       name="firstName"
+    //       placeholder="first name"
+    //       value={values.firstName}
+    //       onChange={handleChange}
+    //     />
+    //     <input
+    //       type="password"
+    //       name="password"
+    //       value={values.password}
+    //       onChange={handleChange}
+    //     />
+    //   </>
+    // </div>
   );
 };
 
